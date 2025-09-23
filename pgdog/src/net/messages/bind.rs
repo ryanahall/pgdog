@@ -269,7 +269,7 @@ impl FromBytes for Bind {
                 _ => Format::Binary,
             })
             .collect();
-        let num_params = bytes.get_i16();
+        let num_params = bytes.get_u16();
         let params = (0..num_params)
             .map(|_| {
                 let len = bytes.get_i32();
@@ -316,7 +316,7 @@ impl ToBytes for Bind {
                 Format::Binary => 1,
             });
         }
-        payload.put_i16(self.params.len() as i16);
+        payload.put_u16(self.params.len() as u16);
         for param in &self.params {
             payload.put_i32(param.len);
             payload.put(&param.data[..]);
